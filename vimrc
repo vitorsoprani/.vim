@@ -1,6 +1,11 @@
-set shiftwidth=8
+setlocal formatoptions+=r
+setlocal formatoptions+=o
+
+set noexpandtab   " Default
 set tabstop=8
-set autoindent
+set shiftwidth=0  " Use value of tabstop
+set softtabstop=0 " Default
+set smarttab      " Optional
 set smartindent
 
 set number
@@ -8,14 +13,22 @@ set relativenumber
 set colorcolumn=80
 set cursorline
 
-colorscheme habamax
+"https://vim.fandom.com/wiki/Highlight_unwanted_spaces
+autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
+
+colorscheme retrobox
 syntax on
 
-"https://vim.fandom.com/wiki/Highlight_unwanted_spaces
-:highlight ExtraWhitespace ctermbg=red guibg=red
-:match ExtraWhitespace /\s\+\%#\@<!$/
-
-set scrolloff=15
+set mouse=a
+set scrolloff=16
+set splitright
+set splitbelow
 
 
 
