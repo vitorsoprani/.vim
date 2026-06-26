@@ -22,28 +22,51 @@ autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
 
-colorscheme retrobox
-
 set mouse=a
 set scrolloff=16
 set splitright
 set splitbelow
 
-
-
-
 let python_highlight_all=1
 syntax on
+colorscheme retrobox
+
+" Atalho para disparar o autocomplete do LSP manualmente com Ctrl+Espaço
+inoremap <expr> <C-Space> pumvisible() ? "\<C-n>" : "\<C-x>\<C-o>"
+inoremap <expr> <C-@> pumvisible() ? "\<C-n>" : "\<C-x>\<C-o>"
 
 let g:lsp_format_sync_timeout=1000
 let g:lsp_semantic_enabled=1
+let g:lsp_semantic_delay=100
 
-if executable('pylsp')
-	augroup lsp_pylsp
+" Mapeamento de Tokens Semânticos do LSP para grupos de sintaxe do Vim
+highlight default link LspSemanticClass Type
+highlight default link LspSemanticMethod Function
+highlight default link LspSemanticFunction Function
+highlight default link LspSemanticVariable Identifier
+highlight default link LspSemanticParameter Identifier
+highlight default link LspSemanticProperty Identifier
+highlight default link LspSemanticDecorator PreProc
+highlight default link LspSemanticKeyword Keyword
+highlight default link LspSemanticString String
+highlight default link LspSemanticNumber Number
+highlight default link LspSemanticComment Comment
+
+" npm install -g basedpyright
+if executable('basedpyright-langserver')
+	augroup lsp_basedpyright
+		autocmd!
 		autocmd User lsp_setup call lsp#register_server({
-			\ 'name': 'pylsp',
-			\ 'cmd': {server_info->['pylsp']},
+			\ 'name': 'basedpyright',
+			\ 'cmd': {server_info->['basedpyright-langserver', '--stdio']},
 			\ 'allowlist': ['python'],
+			\ 'workspace_config': {
+			\   'python': {
+			\	 'analysis': {
+			\	   'typeCheckingMode': 'basic'
+			\	 }
+			\   }
+			\ },
 			\ })
 		autocmd FileType python setlocal omnifunc=lsp#complete
 	augroup end
