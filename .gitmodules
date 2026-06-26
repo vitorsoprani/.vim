@@ -1,3 +1,6 @@
 [submodule "pack/vendor/start/vim-lsp"]
 	path = pack/vendor/start/vim-lsp
 	url = https://github.com/prabirshrestha/vim-lsp.git
+[submodule "pack/vendor/start/editorconfig-vim"]
+	path = pack/vendor/start/editorconfig-vim
+	url = https://github.com/editorconfig/editorconfig-vim.git

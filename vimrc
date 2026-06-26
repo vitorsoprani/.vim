@@ -1,11 +1,11 @@
 setlocal formatoptions+=r
 setlocal formatoptions+=o
 
-set noexpandtab   " Default
+set noexpandtab		" Default
 set tabstop=8
-set shiftwidth=0  " Use value of tabstop
-set softtabstop=0 " Default
-set smarttab      " Optional
+set shiftwidth=8	" Use value of tabstop
+set softtabstop=8	" Default
+set smarttab		" Optional
 set smartindent
 
 set number
@@ -23,7 +23,6 @@ autocmd InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
 
 colorscheme retrobox
-syntax on
 
 set mouse=a
 set scrolloff=16
@@ -33,10 +32,22 @@ set splitbelow
 
 
 
-
+let python_highlight_all=1
+syntax on
 
 let g:lsp_format_sync_timeout=1000
 let g:lsp_semantic_enabled=1
+
+if executable('pylsp')
+	augroup lsp_pylsp
+		autocmd User lsp_setup call lsp#register_server({
+			\ 'name': 'pylsp',
+			\ 'cmd': {server_info->['pylsp']},
+			\ 'allowlist': ['python'],
+			\ })
+		autocmd FileType python setlocal omnifunc=lsp#complete
+	augroup end
+endif
 
 if executable('clangd')
 	augroup lsp_clangd
@@ -79,3 +90,4 @@ augroup lsp_install
 	" call s:on_lsp_buffer_enabled only for languages that has the server registered.
 	autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
 augroup END
+
