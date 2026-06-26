@@ -62,9 +62,10 @@ if executable('basedpyright-langserver')
 			\ 'allowlist': ['python'],
 			\ 'workspace_config': {
 			\   'python': {
-			\	 'analysis': {
-			\	   'typeCheckingMode': 'basic'
-			\	 }
+			\     'analysis': {
+			\       'typeCheckingMode': 'basic',
+			\       'diagnosticMode': 'openFilesOnly'
+			\     }
 			\   }
 			\ },
 			\ })
