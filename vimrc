@@ -17,6 +17,7 @@ set formatoptions+=ro
 setlocal autoindent
 
 let python_highlight_all=1
+let g:asmsyntax = 'nasm'
 
 "https://vim.fandom.com/wiki/Highlight_unwanted_spaces
 autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
